@@ -43,7 +43,7 @@ RTree <- setRefClass(
         if (parent > 0) {
           root <- getRoot(data, parent, idColumn, parentIdColumn);
         } else {
-          root <- data[which(data[[idColumn]] == id),][['title']];
+          root <- data[which(data[[idColumn]] == id),][['categoryId']];
         }
         root
       }

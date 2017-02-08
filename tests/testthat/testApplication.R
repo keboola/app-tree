@@ -11,6 +11,6 @@ test_that("basic run", {
   )
   expect_equal(
     as.character(data[['root']]),
-    as.character(c('foo', 'foo', 'foo', 'foo'))
+    as.character(c('1', '1', '1', '1'))
   )
 })
