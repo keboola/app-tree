@@ -1,5 +1,5 @@
 col1,col2,title
-"a","non-existent",foo
-"b","c",bar
-"c","c",baz
-"d","b",buzz
+a,non-existent,foo
+b,c,bar
+c,c,baz
+d,b,buzz

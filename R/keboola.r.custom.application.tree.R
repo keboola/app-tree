@@ -50,7 +50,12 @@ RTree <- setRefClass(
       getLevel <- function(data, id, idColumn, parentIdColumn, previous) {
         parent <- data[which(data[[idColumn]] == id),][[parentIdColumn]]
         if (length(parent) > 0) {
-          result <- getLevel(data, parent, idColumn, parentIdColumn, id)
+          if (parent == id) {
+            .self$logInfo("Loop detected")
+            result <- list(level = 0, id = id);
+          } else {
+            result <- getLevel(data, parent, idColumn, parentIdColumn, id)
+          }
           result[['level']] <- result[['level']] + 1
         } else {
           result <- list(level = 0, id = previous);
