@@ -44,36 +44,28 @@ RTree <- setRefClass(
       }
 
       data <- read.csv(file = file.path(normalizePath(dataDir, mustWork = FALSE), "in/tables/tree.csv"))
+      data[[idColumn]] <- as.character(data[[idColumn]])
+      data[[parentColumn]] <- as.character(data[[parentColumn]])
 
-      browser()
       getLevel <- function(data, id, idColumn, parentIdColumn) {
-        browser()
         parent <- data[which(data[[idColumn]] == id),][[parentIdColumn]]
-        if (parent > 0) {
-          level <- getLevel(data, parent, idColumn, parentIdColumn) + 1;
+        if (length(parent) > 0) {
+          result <- getLevel(data, parent, idColumn, parentIdColumn)
+          result[['level']] <- result[['level']] + 1
         } else {
-          level <- 1;
+          result <- list(level = 0, id = id);
         }
-        level
-      }
-
-      getRoot <- function(data, id, idColumn, parentIdColumn) {
-        parent <- data[which(data[[idColumn]] == id),][[parentIdColumn]]
-        if (parent > 0) {
-          root <- getRoot(data, parent, idColumn, parentIdColumn);
-        } else {
-          root <- data[which(data[[idColumn]] == id),][[idColumn]];
-        }
-        root
+        result
       }
 
       outData <- data
-      outData$levels <- sapply(data[[idColumn]], function(val) {
+      levels <- lapply(data[[idColumn]], function(val) {
         getLevel(data, val, idColumn, parentColumn)
       })
-      outData$root <- sapply(data[[idColumn]], function(val) {
-        getRoot(data, val, idColumn, parentColumn)
-      })
+      listIds <- lapply(levels, function(elem) { elem$id })
+      listlevels <- lapply(levels, function(elem) { elem$level })
+      outData[['levels']] <- unlist(listlevels)
+      outData[['root']] <- unlist(listIds)
 
       write.csv(outData, file = file.path(normalizePath(dataDir, mustWork = FALSE), "out/tables/tree.csv"), row.names = FALSE)
     }

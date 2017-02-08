@@ -15,7 +15,8 @@ if (nchar(Sys.getenv("KBC_DATADIR")) > 0) {
 }
 
 rep <- MultiReporter$new(
-    reporters = list(CheckReporter$new(), SummaryReporter$new(), FailReporter$new())
+    reporters = list(SummaryReporter$new())
+    # , CheckReporter$new(), FailReporter$new()s
 )
-test_check("keboola.r.custom.application.tree")
+test_check("keboola.r.custom.application.tree", reporter = rep)
 
