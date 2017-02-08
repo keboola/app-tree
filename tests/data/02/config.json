@@ -1,0 +1,24 @@
+{
+    "storage": {
+        "input": {
+            "tables": {
+                "0": {
+                    "source": "in.c-main.data",
+                    "destination": "tree.csv"
+                }
+            }
+        },
+        "output": {
+            "tables": {
+                "0": {
+                    "source": "tree.csv",
+                    "destination": "out.c-main.data"
+                }
+            }
+        }
+    },
+    "parameters": {
+    	"idColumn": "col1",
+    	"parentColumn": "col2"    	
+    }
+}
