@@ -36,9 +36,9 @@ categoryId | categoryParentId	| title
 Sample output
 -------------------
 
-categoryId | categoryParentId	| title | levels | root
---- | --- | --- | --- | 
-1 |	0 | foo | 1 | 1
-2 | 1 | bar | 2 | 1
-3 | 1 | baz | 2 | 1
-4 | 2 | buzz | 3 | 1
+categoryId | categoryParentId | title | levels | root
+--- | --- | --- | --- | --- |
+1 |	0 | foo | 1 | 1 |
+2 | 1 | bar | 2 | 1 |
+3 | 1 | baz | 2 | 1 |
+4 | 2 | buzz | 3 | 1 |

@@ -9,7 +9,7 @@ devtools::install_github('keboola/r-application', ref = "master", force = TRUE)
 devtools::install_github('keboola/r-docker-application', ref = "master", force = TRUE)
 library('keboola.r.application')
 library('keboola.r.docker.application')
-source('R/keboola.r.custom.application.tree.R')
+source('/home/R/keboola.r.custom.application.tree.R')
 
 # run it
 app <- RTree$new('/data/')
