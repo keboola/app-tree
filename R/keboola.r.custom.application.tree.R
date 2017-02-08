@@ -47,13 +47,13 @@ RTree <- setRefClass(
       data[[idColumn]] <- as.character(data[[idColumn]])
       data[[parentColumn]] <- as.character(data[[parentColumn]])
 
-      getLevel <- function(data, id, idColumn, parentIdColumn) {
+      getLevel <- function(data, id, idColumn, parentIdColumn, previous) {
         parent <- data[which(data[[idColumn]] == id),][[parentIdColumn]]
         if (length(parent) > 0) {
-          result <- getLevel(data, parent, idColumn, parentIdColumn)
+          result <- getLevel(data, parent, idColumn, parentIdColumn, id)
           result[['level']] <- result[['level']] + 1
         } else {
-          result <- list(level = 0, id = id);
+          result <- list(level = 0, id = previous);
         }
         result
       }
@@ -64,6 +64,7 @@ RTree <- setRefClass(
       })
       listIds <- lapply(levels, function(elem) { elem$id })
       listlevels <- lapply(levels, function(elem) { elem$level })
+      browser()
       outData[['levels']] <- unlist(listlevels)
       outData[['root']] <- unlist(listIds)
 

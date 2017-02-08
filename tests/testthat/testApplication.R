@@ -28,7 +28,7 @@ test_that("run with parameters", {
   )
   expect_equal(
     as.character(data[['root']]),
-    as.character(c('0', '0', '0', '0'))
+    as.character(c('1', '1', '1', '1'))
   )
 })
 
