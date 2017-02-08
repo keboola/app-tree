@@ -1,0 +1,10 @@
+version: '2'
+services:
+  r-tree:
+    build: .
+    image: keboola/r-tree
+    tty: true
+    stdin_open: true
+    command: bash
+    volumes:
+      - ./:/code

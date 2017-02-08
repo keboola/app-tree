@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^Dockerfile$
+^init\.R$
+^main\.R$
+^deploy.sh$
+^run_tests.sh$
+^docker-compose.yml$
+^doc$
