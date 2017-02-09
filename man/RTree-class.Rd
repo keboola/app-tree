@@ -2,8 +2,8 @@
 % Please edit documentation in R/keboola.r.custom.application.tree.R
 \docType{class}
 \name{RTree-class}
-\alias{RTree}
 \alias{RTree-class}
+\alias{RTree}
 \title{Application which runs KBC transformations in R}
 \description{
 Application which runs KBC transformations in R
