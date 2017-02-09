@@ -45,8 +45,8 @@ RTree <- setRefClass(
         parentColumn <- 'categoryParentId'
       }
       tryCatch({
-        inFile <<- unlist(.self$getInputTables())[2]
-        outFile <<- unlist(.self$getExpectedOutputTables())[1]
+        inFile <<- unlist(.self$getInputTables())[['destination']]
+        outFile <<- unlist(.self$getExpectedOutputTables())[['source']]
       }, error = function(e) {
         stop("There must be exactly one input and output table.")
       })
