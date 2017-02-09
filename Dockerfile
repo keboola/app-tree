@@ -13,4 +13,4 @@ RUN R CMD build .
 RUN R CMD INSTALL keboola.r.custom.application.tree_*
 
 # Run the application
-ENTRYPOINT Rscript ./main2.R /data/
+ENTRYPOINT Rscript ./main.R /data/
