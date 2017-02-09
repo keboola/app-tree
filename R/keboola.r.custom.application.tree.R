@@ -9,7 +9,9 @@ RTree <- setRefClass(
   fields = list(
     scriptContent = 'character',
     tags = 'character',
-    packages = 'character'
+    packages = 'character',
+    inFile = 'character',
+    outFile = 'character'
   ),
   methods = list(
     initialize = function(args = NULL) {
@@ -18,7 +20,7 @@ RTree <- setRefClass(
       \\item{\\code{args} Optional name of data directory, if not supplied then it
       will be read from command line argument.}
       }}"
-           callSuper(args)
+      callSuper(args)
     },
 
 
@@ -42,8 +44,14 @@ RTree <- setRefClass(
       if (length(parentColumn) == 0)  {
         parentColumn <- 'categoryParentId'
       }
+      tryCatch({
+        inFile <<- unlist(.self$getInputTables())[2]
+        outFile <<- unlist(.self$getExpectedOutputTables())[1]
+      }, error = function(e) {
+        stop("There must be exactly one input and output table.")
+      })
 
-      data <- read.csv(file = file.path(normalizePath(dataDir, mustWork = FALSE), "in/tables/tree.csv"))
+      data <- read.csv(file = file.path(normalizePath(dataDir, mustWork = FALSE), "in", "tables", .self$inFile))
       data[[idColumn]] <- as.character(data[[idColumn]])
       data[[parentColumn]] <- as.character(data[[parentColumn]])
       if (!(parentColumn %in% colnames(data))) {
@@ -78,7 +86,7 @@ RTree <- setRefClass(
       outData[['levels']] <- unlist(listlevels)
       outData[['root']] <- unlist(listIds)
 
-      write.csv(outData, file = file.path(normalizePath(dataDir, mustWork = FALSE), "out/tables/tree.csv"), row.names = FALSE)
+      write.csv(outData, file = file.path(normalizePath(dataDir, mustWork = FALSE), "out", "tables", .self$outFile), row.names = FALSE)
     }
   )
 )
