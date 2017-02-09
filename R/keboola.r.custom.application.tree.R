@@ -52,14 +52,14 @@ RTree <- setRefClass(
       })
 
       data <- read.csv(file = file.path(normalizePath(dataDir, mustWork = FALSE), "in", "tables", .self$inFile))
-      data[[idColumn]] <- as.character(data[[idColumn]])
-      data[[parentColumn]] <- as.character(data[[parentColumn]])
       if (!(parentColumn %in% colnames(data))) {
         stop(paste0("Column ", parentColumn, " not present in table."))
       }
       if (!(idColumn %in% colnames(data))) {
         stop(paste0("Column ", idColumn, " not present in table."))
       }
+      data[[idColumn]] <- as.character(data[[idColumn]])
+      data[[parentColumn]] <- as.character(data[[parentColumn]])
 
       getLevel <- function(data, id, idColumn, parentIdColumn, previous) {
         parent <- data[which(data[[idColumn]] == id),][[parentIdColumn]]

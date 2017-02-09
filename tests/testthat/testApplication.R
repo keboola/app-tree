@@ -69,7 +69,7 @@ test_that("run with loop", {
 test_that("run with invalid columns", {
   app <- RTree$new(file.path(KBC_DATADIR, '05'))
   app$readConfig()
-  expect_error(app$run())
+  expect_error(app$run(), ".*?not present in table")
 })
 
 test_that("run with input and output mapping", {
