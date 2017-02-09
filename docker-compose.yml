@@ -1,8 +1,8 @@
 version: '2'
 services:
-  r-tree:
+  app-tree:
     build: .
-    image: keboola/r-tree
+    image: keboola/app-tree
     tty: true
     stdin_open: true
     command: bash
