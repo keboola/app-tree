@@ -3,8 +3,8 @@ language: bash
 services:
   - docker
 before_script:
-  - docker-compose build r-tree
-script: docker-compose run --rm --entrypoint sh -e KBC_DATA_DIR=/code/tests/data/ r-tree /code/run_tests.sh
+  - docker-compose build app-tree
+script: docker-compose run --rm --entrypoint sh -e CODECLIMATE_REPO_TOKEN app-tree /home/tests/run.sh
 after_success:
   - docker images
 deploy:
@@ -12,6 +12,8 @@ deploy:
   skip_cleanup: true
   script: ./deploy.sh
   on:
-    tags: true  
+    tags: true
 notifications:
-  slack: keboola:eoqvo0RDzLRDPytuVEHRJNOc
+  slack:
+    slack: keboola:eoqvo0RDzLRDPytuVEHRJNOc
+  email: false  
