@@ -65,3 +65,9 @@ test_that("run with loop", {
     as.character(c('1', '1', '1', '1'))
   )
 })
+
+test_that("run with invalid columns", {
+  app <- RTree$new(file.path(KBC_DATADIR, '05'))
+  app$readConfig()
+  expect_error(app$run())
+})
