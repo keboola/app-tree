@@ -85,6 +85,12 @@ RTree <- setRefClass(
       listlevels <- lapply(levels, function(elem) { elem$level })
       outData[['levels']] <- unlist(listlevels)
       outData[['root']] <- unlist(listIds)
+      if (nrow(outData) == 0) {
+        .self$logWarning("Root column is empty, is source table correct?")
+        # Add empty columns
+        outData[['levels']] <- integer(0)
+        outData[['root']] <- integer(0)
+      }
 
       write.csv(outData, file = file.path(normalizePath(dataDir, mustWork = FALSE), "out", "tables", .self$outFile), row.names = FALSE)
     }

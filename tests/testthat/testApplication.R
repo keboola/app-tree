@@ -88,3 +88,18 @@ test_that("run with input and output mapping", {
   )
 })
 
+test_that("run with empty table", {
+  app <- RTree$new(file.path(KBC_DATADIR, '07'))
+  app$readConfig()
+  app$run()
+  expect_true(file.exists(file.path(KBC_DATADIR, '07', 'out', 'tables', 'some-output.csv')))
+  data <- read.csv(file.path(KBC_DATADIR, '07', 'out', 'tables', 'some-output.csv'))
+  expect_equal(
+    c("categoryId", "categoryParentId", "title", "levels", "root"),
+    colnames(data)
+  )
+  expect_equal(
+    0,
+    nrow(data)
+  )
+})
