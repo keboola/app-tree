@@ -4,7 +4,7 @@ services:
   - docker
 before_script:
   - docker-compose build app-tree
-script: docker-compose run --rm --entrypoint sh -e KBC_DATADIR=/code/tests/data/ -e CODECLIMATE_REPO_TOKEN app-tree /code/run_tests.sh
+script: docker-compose run --rm --entrypoint sh -e KBC_DATADIR=/code/tests/data/ app-tree /code/run_tests.sh
 after_success:
   - docker images
 deploy:

@@ -1,9 +1,9 @@
-FROM quay.io/keboola/docker-base-r-packages:3.3.2-b
+FROM quay.io/keboola/docker-custom-r:1.5.3
 
-WORKDIR /home
+WORKDIR /code
 
 # Initialize the tree runner
-COPY . /home/
+COPY . /code/
 
 # Install some commonly used R packages and the R application
 RUN Rscript ./init.R
