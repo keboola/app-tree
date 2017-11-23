@@ -7,10 +7,7 @@ This application computes levels in a table representing a tree (e.g. product ca
 Configuration
 -------------------
 
-Both input and output file is named **tree.csv**. See the screenshot for sample configuration
-
-![Configuration screenshot](https://github.com/keboola/r-custom-application-tree/blob/master/doc/screenshot.png)
-
+Names of both input and output files are arbitrary.
 You can supply the following parameters to identify column names with **ID** and **parent ID**:
 
 ```
