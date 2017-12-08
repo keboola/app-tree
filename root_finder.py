@@ -50,7 +50,7 @@ def find_roots(rows, parent_column, child_column, null_value):
 
 
 def run():
-  cfg = docker.Config('./tmp')
+  cfg = docker.Config()
   parameters = cfg.get_parameters()
   c_parent = parameters.get('parent_column')
   c_child = parameters.get('child_column')
