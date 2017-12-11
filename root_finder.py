@@ -1,8 +1,26 @@
 import csv
 from keboola import docker
 
+def update_parents(parent, child, roots_map, nodes_map):
+  if child in nodes_map:
+    children = nodes_map.pop(child)
+    for c in children:
+      roots_map[c] = parent
+    children.add(child)
+    parentChildren = nodes_map.get(parent, set())
+    parentChildren.update(children)
+    nodes_map[parent] = parentChildren
+  else:
+    newChildren = nodes_map.get(parent, set())
+    newChildren.add(child)
+    nodes_map[parent] = newChildren
+  return (roots_map, nodes_map)
+
+
 def find_roots(rows, parent_column, child_column, null_value):
+  # parent - children set pairs map
   nodes_map = {}
+  # child - parent pais map
   roots_map = {}
   null_nodes = set()
   for row in rows:
@@ -10,18 +28,7 @@ def find_roots(rows, parent_column, child_column, null_value):
     child = row[child_column]
     if (parent not in roots_map) and (parent != null_value):
       roots_map[child] = parent
-      if child in nodes_map:
-        children = nodes_map.pop(child)
-        for c in children:
-          roots_map[c] = parent
-        children.add(child)
-        parentChildren = nodes_map.get(parent, set())
-        parentChildren.update(children)
-        nodes_map[parent] = parentChildren
-      else:
-        newChildren = nodes_map.get(parent, set())
-        newChildren.add(child)
-        nodes_map[parent] = newChildren
+      roots_map, nodes_map = update_parents(parent, child, roots_map, nodes_map)
     else:
       if parent == null_value:
         nodes_map[child] = set()
@@ -29,18 +36,7 @@ def find_roots(rows, parent_column, child_column, null_value):
       else:
         newParent = roots_map[parent]
         roots_map[child] = newParent
-        if child in nodes_map:
-          children = nodes_map.pop(child)
-          for c in children:
-            roots_map[c] = newParent
-          children.add(child)
-          parentChildren = nodes_map.get(newParent, set())
-          parentChildren.update(children)
-          nodes_map[newParent] = parentChildren
-        else:
-          newChildren = nodes_map.get(newParent, set())
-          newChildren.add(child)
-          nodes_map[newParent] = newChildren
+        roots_map, nodes_map = update_parents(newParent, child, roots_map, nodes_map)
     #print(row, roots_map, nodes_map)
   #print("roots map", roots_map)
   #print("nodes map", nodes_map)
