@@ -30,7 +30,7 @@ input = (
 )
 
 def test_find_roots():
-  result = find_roots(input, 'parent', 'child', '0')
+  result = find_roots(input, 'parent', 'child')
   assert 'roots' in result
   assert 'null_nodes' in result
   assert result['roots'] == {'2': '1', '777': '1', '77': '1', '7': '1', '3': '1', '4': '1', '8': '1', '5': '1'}

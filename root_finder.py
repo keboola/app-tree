@@ -17,7 +17,7 @@ def update_parents(parent, child, roots_map, nodes_map):
   return (roots_map, nodes_map)
 
 
-def find_roots(rows, parent_column, child_column, null_value):
+def find_roots(rows, parent_column, child_column):
   # parent - children set pairs map
   nodes_map = {}
   # child - parent pais map
@@ -26,7 +26,7 @@ def find_roots(rows, parent_column, child_column, null_value):
   for row in rows:
     parent = row[parent_column]
     child = row[child_column]
-    if parent == null_value:
+    if parent == '0' or parent == '':
       nodes_map[child] = set()
       null_nodes.add(child)
     else:
@@ -49,7 +49,6 @@ def run():
   parameters = cfg.get_parameters()
   c_parent = parameters.get('parent_column')
   c_child = parameters.get('child_column')
-  null_value = parameters.get('null_node_value','')
   if c_parent is None or c_child is None:
     raise ValueError("parent_column and child_column are required parameters.")
   # get input and output table and validate them
@@ -70,7 +69,7 @@ def run():
   with open(in_file_path, mode='rt', encoding='utf-8') as in_file:
     lazy_lines = (line.replace('\0', '') for line in in_file)
     csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
-    result = find_roots(csv_reader, c_parent, c_child, null_value)
+    result = find_roots(csv_reader, c_parent, c_child)
   with open(out_file_path, mode='wt', encoding='utf-8') as out_file:
     writer = csv.DictWriter(out_file, fieldnames=['childId', 'rootId'], dialect='kbc')
     writer.writeheader()
@@ -78,5 +77,5 @@ def run():
       out_row = {'childId': child, 'rootId': root}
       writer.writerow(out_row)
     for null_node in result.get("null_nodes", set()):
-      out_row = {'childId': null_node, 'rootId': null_value}
+      out_row = {'childId': null_node, 'rootId': null_node}
       writer.writerow(out_row)
