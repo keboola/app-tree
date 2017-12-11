@@ -26,17 +26,16 @@ def find_roots(rows, parent_column, child_column, null_value):
   for row in rows:
     parent = row[parent_column]
     child = row[child_column]
-    if (parent not in roots_map) and (parent != null_value):
-      roots_map[child] = parent
-      roots_map, nodes_map = update_parents(parent, child, roots_map, nodes_map)
+    if parent == null_value:
+      nodes_map[child] = set()
+      null_nodes.add(child)
     else:
-      if parent == null_value:
-        nodes_map[child] = set()
-        null_nodes.add(child)
-      else:
-        newParent = roots_map[parent]
-        roots_map[child] = newParent
-        roots_map, nodes_map = update_parents(newParent, child, roots_map, nodes_map)
+      new_parent = parent
+      if parent in roots_map:
+        new_parent = roots_map[parent]
+      roots_map[child] = new_parent
+      roots_map, nodes_map = update_parents(new_parent, child, roots_map, nodes_map)
+
     #print(row, roots_map, nodes_map)
   #print("roots map", roots_map)
   #print("nodes map", nodes_map)
