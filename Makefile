@@ -1,5 +1,5 @@
 apptest:
-	docker-compose run --rm app pytest
+	docker-compose run --rm app-tree pytest
 
 devtest:
 	docker-compose run --rm dev pytest

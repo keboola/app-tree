@@ -1,6 +1,6 @@
 version: '2'
 services:
-  app:
+  app-tree:
     build: .
     image: keboola/app-tree
     tty: true
