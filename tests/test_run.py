@@ -3,8 +3,8 @@ import pytest
 from distutils.dir_util import copy_tree
 from shutil import copyfile
 
-def test_run(tmpdir):
-  src = 'tests/data'
+def test_run_00(tmpdir):
+  src = 'tests/data/00'
   configPath = src + '/config.json'
   dst = str(tmpdir.realpath())
   copy_tree(src + "/in", dst + "/in")
