@@ -59,3 +59,18 @@ def test_invalidcolumn(tmpdir):
   with pytest.raises(Exception) as excinfo:
     run(dst)
   assert 'not present in table' in str(excinfo.value)
+
+def test_emptytable(tmpdir):
+  dir_name = '07'
+  src = 'tests/data/' + dir_name
+  dst = str(tmpdir.realpath()) + "/" + dir_name
+  copy_tree(src, dst)
+  run(dst)
+  cfg = docker.Config(dst)
+  parameters = cfg.get_parameters()
+  c_child = parameters.get('idColumn', 'categoryId')
+  current = dst + "/out/tables/some-output.csv"
+  with open(current, mode='rt', encoding='utf-8') as in_file:
+    lazy_lines = (line.replace('\0', '') for line in in_file)
+    csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
+    assert len(list(csv_reader)) == 0
