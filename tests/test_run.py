@@ -74,3 +74,4 @@ def test_emptytable(tmpdir):
     lazy_lines = (line.replace('\0', '') for line in in_file)
     csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
     assert len(list(csv_reader)) == 0
+    assert csv_reader.fieldnames == ["categoryId", "categoryParentId", "title", "levels", "root"]
