@@ -16,7 +16,6 @@ def parse_tree(rows, parent_column, child_column):
       group = grouped_relations.get(parent, set())
       group.add(child)
       grouped_relations[parent] = group
-  print(roots, grouped_relations)
   return roots, grouped_relations
 
 def walk_tree_r(node, relations, level, root):
@@ -59,6 +58,5 @@ def run():
     writer = csv.DictWriter(out_file, fieldnames=['childId', 'levels', 'root'], dialect='kbc')
     writer.writeheader()
     for  child, level, root in walk_tree(roots, relations):
-      print(child, level, root)
       out_row = {'childId': child, 'levels': level, 'root': root}
       writer.writerow(out_row)
