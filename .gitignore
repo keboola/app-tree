@@ -1,5 +1,4 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-/tests/config.R
+/.DS_Store
+tmp/
+__pycache__/
+.vscode/

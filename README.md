@@ -12,18 +12,18 @@ You can supply the following parameters to identify column names with **ID** and
 
 ```
 {
-	"idColumn": "col1",
-	"parentColumn": "col2" 
+    "idColumn": "col1",
+    "parentColumn": "col2"
 }
 ```
 
 If you do not supply the parameters, the table must contain columns **categoryId** and **categoryParentId**.
 
-Sample input 
+Sample input
 -------------------
 
 categoryId | categoryParentId	| title
---- | --- | --- 
+--- | --- | ---
 1 |	0 | foo
 2 | 1 | bar
 3 | 1 | baz
