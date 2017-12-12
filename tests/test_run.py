@@ -50,3 +50,12 @@ def test_success_run(tmpdir, datadir_and_results):
       root = row['root']
       assert expected_levels[child] == level
       assert expected_roots[child] == root
+
+def test_invalidcolumn(tmpdir):
+  dir_name = '05'
+  src = 'tests/data/' + dir_name
+  dst = str(tmpdir.realpath()) + "/" + dir_name
+  copy_tree(src, dst)
+  with pytest.raises(Exception) as excinfo:
+    run(dst)
+  assert 'not present in table' in str(excinfo.value)

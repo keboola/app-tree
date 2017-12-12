@@ -59,6 +59,10 @@ def run(datadir):
     lazy_lines = (line.replace('\0', '') for line in in_file)
     csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
     input_csv_header = csv_reader.fieldnames
+    if c_child not in input_csv_header:
+      raise Exception('Column ' + c_child + 'not present in table')
+    if c_parent not in input_csv_header:
+      raise Exception('Column ' + c_parent + 'not present in table')
     roots, relations, rest = parse_tree(csv_reader, c_parent, c_child)
 
   with open(out_file_path, mode='wt', encoding='utf-8') as out_file:
