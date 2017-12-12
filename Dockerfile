@@ -9,4 +9,4 @@ WORKDIR /code
 COPY . /code/
 
 # Run the application
-CMD python -u ./src/main.py --data=/data
+CMD python3 -u ./src/main.py --data=/data

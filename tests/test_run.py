@@ -1,4 +1,4 @@
-from root_finder import run
+from src.root_finder import run
 import pytest
 from distutils.dir_util import copy_tree
 from shutil import copyfile

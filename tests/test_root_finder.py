@@ -1,7 +1,7 @@
 import pytest
 import io
 import csv
-from root_finder import parse_tree, walk_tree
+from src.root_finder import parse_tree, walk_tree
 from collections import OrderedDict
 
 input_csv_string = """
