@@ -5,9 +5,6 @@ services:
     image: keboola/app-tree
     tty: true
     stdin_open: true
-    command: bash
-    volumes:
-      - ./:/code
     environment:
       - PYTHONPATH=.
       - KBC_DATADIR=/data

@@ -1,5 +1,8 @@
-apptest:
+pytest:
 	docker-compose run --rm app-tree pytest
+functest:
+	docker-compose run --rm -v $(PWD)/tests/data/00:/data app-tree
+testall: pytest functest
 
 devtest:
 	docker-compose run --rm dev pytest
