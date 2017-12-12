@@ -2,6 +2,8 @@ from src.root_finder import run
 import pytest
 from distutils.dir_util import copy_tree
 from shutil import copyfile
+import csv
+from keboola import docker
 
 def test_run_00(tmpdir):
   src = 'tests/data/00'
@@ -16,3 +18,35 @@ def test_run_00(tmpdir):
   print(current)
   print(expected)
   assert len(current - expected) == 0
+
+
+success_dirs_params = [
+  ('01', {'1': '1', '2': '2', '3': '2', '4': '3'}, {'1':'1', '2':'1', '3':'1', '4':'1'}, 'tree.csv'),
+  ('02', {'1': '1', '2': '2', '3': '2', '4': '3'}, {'1':'1', '2':'1', '3':'1', '4':'1'}, 'tree.csv'),
+  ('03', {'a': '1', 'b': '2', 'c': '1', 'd': '3'}, {'a':'a', 'b':'c', 'c':'c', 'd':'c'}, 'tree.csv'),
+  ('04', {'1': '1', '2': '2', '3': '2', '4': '3'}, {'1':'1', '2':'1', '3':'1', '4':'1'}, 'tree.csv'),
+  ('06', {'1': '1', '2': '2', '3': '2', '4': '3'}, {'1':'1', '2':'1', '3':'1', '4':'1'}, 'some-output.csv')
+]
+@pytest.fixture(params=success_dirs_params)
+def datadir_and_results(request):
+  return request.param
+
+def test_success_run(tmpdir, datadir_and_results):
+  dir_name, expected_levels, expected_roots, out_file_name = datadir_and_results
+  src = 'tests/data/' + dir_name
+  dst = str(tmpdir.realpath()) + "/" + dir_name
+  copy_tree(src, dst)
+  run(dst)
+  current = dst + "/out/tables/" + out_file_name
+  cfg = docker.Config(dst)
+  parameters = cfg.get_parameters()
+  c_child = parameters.get('idColumn', 'categoryId')
+  with open(current, mode='rt', encoding='utf-8') as in_file:
+    lazy_lines = (line.replace('\0', '') for line in in_file)
+    csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
+    for row in csv_reader:
+      child = row[c_child]
+      level = row['levels']
+      root = row['root']
+      assert expected_levels[child] == level
+      assert expected_roots[child] == root
