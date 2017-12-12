@@ -1,6 +1,14 @@
 version: '2'
 services:
-  app-tree:
+  app:
+    build: .
+    image: keboola/app-tree
+    tty: true
+    stdin_open: true
+    command: bash
+    environment:
+      - PYTHONPATH=.
+  dev:
     build: .
     image: keboola/app-tree
     tty: true
@@ -8,3 +16,5 @@ services:
     command: bash
     volumes:
       - ./:/code
+    environment:
+      - PYTHONPATH=.
