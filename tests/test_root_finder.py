@@ -31,7 +31,7 @@ input = (
 
 def test_parse_tree():
   result = parse_tree(input, 'parent', 'child')
-  assert result == ({'1'}, {'1': {'3', '2'}, '7': {'77', '777'}, '3': {'7'}, '2': {'4'}, '5': {'8'}, '777': {'5'}})
+  assert result == ({'1'}, {'1': {'2', '3'}, '7': {'77', '777'}, '3': {'7'}, '2': {'4'}, '5': {'8'}, '777': {'5'}}, {'1': {'parent': '0'}, '2': {'parent': '1'}, '777': {'parent': '7'}, '77': {'parent': '7'}, '7': {'parent': '3'}, '3': {'parent': '1'}, '4': {'parent': '2'}, '8': {'parent': '5'}, '5': {'parent': '777'}})
 
 walk_tree_result  = {
   ('1', 1, '1'),
@@ -45,6 +45,6 @@ walk_tree_result  = {
   ('4', 3, '1')
 }
 def test_walk_tree():
-  roots, relations = parse_tree(input, 'parent', 'child')
+  roots, relations, rest = parse_tree(input, 'parent', 'child')
   result = walk_tree(roots, relations)
   assert set(result) == walk_tree_result

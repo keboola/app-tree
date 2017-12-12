@@ -1,10 +1,9 @@
-
 import root_finder
 import sys
 import traceback
 
 try:
-    root_finder.run()
+    root_finder.run(None)
 except ValueError as err:
     print(err, file=sys.stderr)
     sys.exit(1)
