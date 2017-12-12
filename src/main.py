@@ -1,9 +1,15 @@
 import root_finder
 import sys
 import traceback
+import os
+import argparse
 
 try:
-    root_finder.run(None)
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument('-d', '--data', dest='dataDir')
+    args = argparser.parse_args()
+    datadir = args.dataDir
+    root_finder.run(datadir)
 except ValueError as err:
     print(err, file=sys.stderr)
     sys.exit(1)
