@@ -34,7 +34,7 @@ def walk_tree(roots, relations):
     yield from walk_tree_r(root, relations, 1, root)
 
 def run(datadir):
-  cfg = docker.Config(datadir or 'tmp')
+  cfg = docker.Config(datadir)
   parameters = cfg.get_parameters()
   c_parent = parameters.get('parentColumn', 'categoryParentId')
   c_child = parameters.get('idColumn', 'categoryId')

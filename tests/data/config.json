@@ -1,0 +1,20 @@
+{"storage" : {
+  "input": {
+    "tables": [
+      {
+        "destination": "test.csv"
+      }
+    ]
+  },
+  "output" :{
+    "tables": [
+      {"source": "result.csv", "destination": "result.csv"}
+    ]
+  }
+},
+  "parameters": {
+  "parentColumn": "categoryParentId",
+  "idColumn": "categoryId"
+
+}
+}
