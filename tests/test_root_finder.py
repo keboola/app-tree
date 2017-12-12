@@ -1,7 +1,7 @@
 import pytest
 import io
 import csv
-from root_finder import find_roots
+from root_finder import parse_tree, walk_tree
 from collections import OrderedDict
 
 input_csv_string = """
@@ -29,9 +29,22 @@ input = (
   OrderedDict([('child', '5'), ('parent', '777')])
 )
 
-def test_find_roots():
-  result = find_roots(input, 'parent', 'child')
-  assert 'roots' in result
-  assert 'null_nodes' in result
-  assert result['roots'] == {'2': '1', '777': '1', '77': '1', '7': '1', '3': '1', '4': '1', '8': '1', '5': '1'}
-  assert result['null_nodes'] == {'1'}
+def test_parse_tree():
+  result = parse_tree(input, 'parent', 'child')
+  assert result == ({'1'}, {'1': {'3', '2'}, '7': {'77', '777'}, '3': {'7'}, '2': {'4'}, '5': {'8'}, '777': {'5'}})
+
+walk_tree_result  = [
+  ('1', 1, '1'),
+  ('3', 2, '1'),
+  ('7', 3, '1'),
+  ('77', 4, '1'),
+  ('777', 4, '1'),
+  ('5', 5, '1'),
+  ('8', 6, '1'),
+  ('2', 2, '1'),
+  ('4', 3, '1')
+]
+def test_walk_tree():
+  roots, relations = parse_tree(input, 'parent', 'child')
+  result = walk_tree(roots, relations)
+  assert list(result) == walk_tree_result
