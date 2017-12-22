@@ -8,10 +8,10 @@ from keboola import docker
 
 def test_run_00(tmpdir):
     src = 'tests/data/00'
-    configPath = src + '/config.json'
+    config_path = src + '/config.json'
     dst = str(tmpdir.realpath())
     copy_tree(src + "/in", dst + "/in")
-    copyfile(configPath, dst + "/config.json")
+    copyfile(config_path, dst + "/config.json")
     tmpdir.mkdir("out").mkdir("tables")
     run(dst)
     current = set(open(dst + "/out/tables/result.csv", "r+").

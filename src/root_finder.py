@@ -47,11 +47,11 @@ def run(datadir):
     # get input and output table and validate them
     tables = cfg.get_input_tables()
     if len(tables) != 1:
-            raise ValueError("Input mapping must contain one table only.")
+        raise ValueError("Input mapping must contain one table only.")
     in_table = tables[0]
     tables = cfg.get_expected_output_tables()
     if len(tables) != 1:
-            raise ValueError("Output mapping must contain one table only.")
+        raise ValueError("Output mapping must contain one table only.")
     out_table = tables[0]
     # physical location of the source file with source data
     in_file_path = in_table['full_path']
@@ -59,7 +59,6 @@ def run(datadir):
     out_file_path = out_table['full_path']
     roots = set()
     relations = {}
-    input_csv_header = []
     with open(in_file_path, mode='rt', encoding='utf-8') as in_file:
         lazy_lines = (line.replace('\0', '') for line in in_file)
         csv_reader = csv.DictReader(lazy_lines, dialect='kbc')

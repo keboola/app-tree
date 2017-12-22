@@ -14,7 +14,7 @@ child,parent
 5,777
 """
 
-input = (
+input_data = (
     OrderedDict([('child', '1'), ('parent', '0')]),
     OrderedDict([('child', '2'), ('parent', '1')]),
     OrderedDict([('child', '777'), ('parent', '7')]),
@@ -28,7 +28,7 @@ input = (
 
 
 def test_parse_tree():
-    result = parse_tree(input, 'parent', 'child')
+    result = parse_tree(input_data, 'parent', 'child')
     assert result == ({'1'}, {'1': {'2', '3'}, '7': {'77', '777'},
                               '3': {'7'}, '2': {'4'}, '5': {'8'},
                               '777': {'5'}},
@@ -53,6 +53,6 @@ walk_tree_result = {
 
 
 def test_walk_tree():
-    roots, relations, rest = parse_tree(input, 'parent', 'child')
+    roots, relations, rest = parse_tree(input_data, 'parent', 'child')
     result = walk_tree(roots, relations)
     assert set(result) == walk_tree_result
