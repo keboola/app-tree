@@ -64,7 +64,7 @@ def test_success_run(tmpdir, datadir_and_results):
             assert expected_roots[child] == root
 
 
-def test_invalidcolumn(tmpdir):
+def test_invalid_column(tmpdir):
     dir_name = '05'
     src = 'tests/data/' + dir_name
     dst = str(tmpdir.realpath()) + "/" + dir_name
@@ -74,7 +74,7 @@ def test_invalidcolumn(tmpdir):
     assert 'not present in table' in str(excinfo.value)
 
 
-def test_emptytable(tmpdir):
+def test_empty_table(tmpdir):
     dir_name = '07'
     src = 'tests/data/' + dir_name
     dst = str(tmpdir.realpath()) + "/" + dir_name
