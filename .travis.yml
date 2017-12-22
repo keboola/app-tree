@@ -5,8 +5,8 @@ services:
 before_script:
   - docker-compose build app-tree
 script: 
-  - make testall
-  - docker-compose run --rm --entrypoint=flake8 app-tree  
+  - docker-compose run --rm --entrypoint=flake8 app-tree
+  - docker-compose run --rm --entrypoint=python app-tree -m pytest
 after_success:
   - docker images
 deploy:
