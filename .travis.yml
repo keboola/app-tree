@@ -1,21 +1,21 @@
 sudo: required
 language: bash
 services:
-  - docker
+- docker
 before_script:
-  - docker-compose build app-tree
-script: 
-  - docker-compose run --rm --entrypoint=flake8 app-tree
-  - docker-compose run --rm --entrypoint=python app-tree -m pytest
+- docker-compose build app-tree
+script:
+- docker-compose run --rm --entrypoint=flake8 app-tree
+- docker-compose run --rm --entrypoint=python app-tree -m pytest
 after_success:
-  - docker images
+- docker images
 deploy:
   provider: script
   skip_cleanup: true
-  script: ./deploy.sh
+  script: "./deploy.sh"
   on:
     tags: true
 notifications:
   slack:
-    slack: keboola:eoqvo0RDzLRDPytuVEHRJNOc
+    secure: OBr5PNbViRlyfYqUm1dfnRk9hsTgZxTyRifYNa2yljkSCbZWFBugiQcJCjSiiYD7XIaSQ+VdjmWOzFskgGDp7T7GITNzbQIwEYIhPZOqE6pFzzmzekLVA4xarWWhlHwCcVSEOotoXN1S/0iIcM2LLs1LpXlCiuxOcygCICwyLAVbdt595NJk8RlMvRszQ5DgOtTT1LaglwO874pcPh8GyXb51FA7AfgtNTp1cdKrBUxFiFbuVfLMNJoIJ5yAqvAbmg/qHVS5H3YM40Itj4tuWmVN14OjfSyOWJasmUPhBxm8zVvtgIQrgGiJYJZWYZsh3/ENHA/GFV35VveJ+TZSe+eLgacg3SAZlQ1BmM1pT5o/PLGJG1z6VCQ91+3q8TiLBP6jKlHjCHeDtaixYM2vnOpifPeTKCUrukC8oihwqA65YruR3VeVSJJRJ2j7JjwLdp8/mZFrbqnEl8sFiKSsgy9WiJlkaGGM+GsoZG47n42ogon2PjTrF45+obB99fGEXUHBnuaeW8CC54V/kUIpLKS1ccI87MxP1+2lx0pT+d/z85VJyDQRE+p1Rf4BRFvPcJJXo05/2sobjr11Al789REYUR84rmuyVivj5iy3Hbl2ivjZt5a21IYy1nrAgyLM/VaROifNo80xTxTfZXRrnRx/wnZwUfaujxY/cAEKc2Y=
   email: false
