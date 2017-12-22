@@ -4,7 +4,9 @@ services:
   - docker
 before_script:
   - docker-compose build app-tree
-script: make testall
+script: 
+  - make testall
+  - docker-compose run --rm --entrypoint=flake8 app-tree  
 after_success:
   - docker images
 deploy:

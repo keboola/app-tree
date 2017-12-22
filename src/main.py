@@ -1,7 +1,6 @@
 import root_finder
 import sys
 import traceback
-import os
 import argparse
 
 try:
