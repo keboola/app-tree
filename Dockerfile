@@ -1,16 +1,12 @@
-FROM quay.io/keboola/docker-custom-r:1.5.3
+FROM python:3.6.3-alpine3.6
+RUN apk add --no-cache git \
+	&& pip3 install --no-cache-dir --upgrade pytest flake8 \
+	&& pip3 install --no-cache-dir --upgrade --force-reinstall git+git://github.com/keboola/python-docker-application.git@2.0.0
 
 WORKDIR /code
 
 # Initialize the tree runner
 COPY . /code/
 
-# Install some commonly used R packages and the R application
-RUN Rscript ./init.R
-
-# Install the app-tree package which is in the local directory
-RUN R CMD build .
-RUN R CMD INSTALL keboola.r.custom.application.tree_*
-
 # Run the application
-ENTRYPOINT Rscript ./main.R /data/
+CMD python3 -u ./src/main.py --data=/data
