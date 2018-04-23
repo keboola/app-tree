@@ -56,12 +56,15 @@ def test_success_run(tmpdir, datadir_and_results):
     with open(current, mode='rt', encoding='utf-8') as in_file:
         lazy_lines = (line.replace('\0', '') for line in in_file)
         csv_reader = csv.DictReader(lazy_lines, dialect='kbc')
+        row_count = 0
         for row in csv_reader:
             child = row[c_child]
             level = row['levels']
             root = row['root']
             assert expected_levels[child] == level
             assert expected_roots[child] == root
+            row_count = row_count + 1
+        assert row_count == len(expected_levels)
 
 
 def test_invalid_column(tmpdir):
