@@ -2,10 +2,6 @@ import csv
 from keboola import docker
 
 
-def is_null_value(value):
-    return value == '' or value == '0'
-
-
 def get_rest(row, child_column):
     return {k: row[k] for k in row if k != child_column}
 
@@ -14,16 +10,30 @@ def parse_tree(rows, parent_column, child_column):
     grouped_relations = {}
     roots = set()
     rest = {}
+    orphaned_parents = set()
+    all_children = set()
     for row in rows:
         parent = row[parent_column]
         child = row[child_column]
         rest[child] = get_rest(row, child_column)
-        if is_null_value(parent):
+        if child == parent:
             roots.add(child)
         else:
             group = grouped_relations.get(parent, set())
             group.add(child)
             grouped_relations[parent] = group
+            if child in orphaned_parents:
+                orphaned_parents.remove(child)
+            if parent not in all_children:
+                orphaned_parents.add(parent)
+            all_children.add(child)
+
+    # take all children of non existent parents and make them roots
+    for orphaned_parent in orphaned_parents:
+        if orphaned_parent not in roots:
+            orphaned_children = grouped_relations[orphaned_parent]
+            roots.update(orphaned_children)
+            grouped_relations.pop(orphaned_parent)
     return roots, grouped_relations, rest
 
 
