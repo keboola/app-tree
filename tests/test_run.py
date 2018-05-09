@@ -72,7 +72,7 @@ def test_invalid_column(tmpdir):
     src = 'tests/data/' + dir_name
     dst = str(tmpdir.realpath()) + "/" + dir_name
     copy_tree(src, dst)
-    with pytest.raises(Exception) as excinfo:
+    with pytest.raises(ValueError) as excinfo:
         run(dst)
     assert 'not present in table' in str(excinfo.value)
 
