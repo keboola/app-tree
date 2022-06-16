@@ -39,3 +39,7 @@ categoryId | categoryParentId | title | levels | root
 2 | 1 | bar | 2 | 1 |
 3 | 1 | baz | 2 | 1 |
 4 | 2 | buzz | 3 | 1 |
+
+## License
+
+MIT licensed, see [LICENSE](./LICENSE) file.
